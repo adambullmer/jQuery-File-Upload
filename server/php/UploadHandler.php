@@ -16,9 +16,10 @@ class UploadHandler
 
     function __construct($options=null) {
         $this->options = array(
-            'script_url' => 'http://10.0.0.5/CodeIgniter_2.1.3/uploader/upload',
+            'script_url' => $this->getFullUrl().'/server/php/UploadHandler.php',
     		'icon_dir' => dirname($_SERVER['SCRIPT_FILENAME']).'/public/img/icons/',
-			//key is the name of the file, value is an array of extensions that are accepted
+			//Naming Convention: array( 'ICON FILE NAME WITHOUT EXT' => array('list', 'of', 'applicable', 'extensions'))
+			//There is a default icon named 'files.png' If you wish to change the name, edit the "return 'files'" line of get_icon_name()
 			//this is for generating stock icons for files other than images
 			'available_icons' => array(
 				//**GENERIC FILES**//
@@ -162,6 +163,7 @@ class UploadHandler
 			}
 		}
 		//no suitable icon found
+		//this uses a default icon named files.png, rename if you wish to change the default icon.
 		return 'files';
 	}
 
@@ -179,7 +181,7 @@ class UploadHandler
 		//change file path for icons of non image files
         if ($icon != '')
 		{
-			$file_path = $this->options['icon_dir'].$icon.'.png';
+			$file_path = $this->options['icon_dir'].$icon.'.png'; //all icons should be in PNG format
 			$type = 'png';
 		}
 		
